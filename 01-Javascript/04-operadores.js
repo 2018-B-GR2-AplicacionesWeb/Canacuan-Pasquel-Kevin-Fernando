@@ -57,10 +57,10 @@ console.log(respuestaFindIndex);
 
 respuestaFind = arregloNumero.find(
     (valorActual) => {
-        return valorActual === 3;
+        return valorActual === 5;
     }
 );
-console.log(respuestaFind);
+console.log("FIND" + respuestaFind);
 
 //--------------------------------------------------------------------
 
