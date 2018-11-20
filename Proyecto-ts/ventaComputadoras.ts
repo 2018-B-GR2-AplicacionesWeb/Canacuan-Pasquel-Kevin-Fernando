@@ -3,50 +3,9 @@ declare var require:any;
 var inquirer = require('inquirer');
 const rxjs = require('rxjs');
 const fs = require('fs');
+const fs2 = require('fs');
 
 //DATOS INICIALES
-
-const AppendFile = (nombreArchivo, contenido,replace?:boolean)=>{
-    // @ts-ignore
-    return  new Promise(
-        (resolve,reject) => {
-            fs.readFile(
-                nombreArchivo,
-                'utf-8',
-                (error,contenidoArchivo) => {
-                    if (error) {
-                        fs.writeFile(
-                            nombreArchivo,
-                            contenido,
-                            (error)=>{
-                                if (error){
-                                    reject(error);
-                                }else {
-                                    resolve(contenido)
-                                }
-                            }
-                        );
-
-                    } else {
-                        fs.writeFile(
-                            nombreArchivo,
-                            replace == true? contenido:contenidoArchivo+contenido,
-                            (error)=>{
-                                if (error){
-                                    reject(error);
-                                }else {
-                                    resolve(contenido)
-                                }
-                            }
-                        );
-                    }
-                }
-            );
-
-        }
-    );
-};
-
 
 // CARGAR DATOS
 const llenarBDD  = (nombreArchivo)=>{
@@ -394,7 +353,7 @@ function operacionesCrud(){
     //    .prompt(menuComprador2)
       //  .then(
         //    (respuestas)=>{
-                //let size = respuestas.size.split(" $")[0];
+
             //    let precio = parseFloat(respuestas.precioProducto);
           //      let producto = new Producto(respuestas.nombreProducto, precio);
         //        let cantidad = respuestas.cantidad;
@@ -403,11 +362,11 @@ function operacionesCrud(){
     //            if (respuestas.seguir){
   //                  elegirComponente(pedido)
 //                }else {
+
                     //console.log('+-------------------------------------------------+' +
-                    //    '\nDetalle del pedido\n' +
-                   //     '+-------------------------------------------------+\n'+
-                 //       'Producto       Cantidad    Precio Unitario\n' +
-               //         '+-------------------------------------------------+')
+
+                    //   COLOCACION DE DATOS
+
              //       pedido.detalle_pedido();
              //       console.log("+-------------------------------------------------+");
             //        console.log("Total: $",pedido.calcular_total());
@@ -476,4 +435,44 @@ class Pedido{
     }
 }
 
+const AppendFile = (nombreArchivo, contenido,replace?:boolean)=>{
+    // @ts-ignore
+    return  new Promise(
+        (resolve,reject) => {
+            fs.readFile(
+                nombreArchivo,
+                'utf-8',
+                (error,contenidoArchivo) => {
+                    if (error) {
+                        fs.writeFile(
+                            nombreArchivo,
+                            contenido,
+                            (error)=>{
+                                if (error){
+                                    reject(error);
+                                }else {
+                                    resolve(contenido)
+                                }
+                            }
+                        );
+
+                    } else {
+                        fs.writeFile(
+                            nombreArchivo,
+                            replace == true? contenido:contenidoArchivo+contenido,
+                            (error)=>{
+                                if (error){
+                                    reject(error);
+                                }else {
+                                    resolve(contenido)
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+
+        }
+    );
+};
 menuInicial();
