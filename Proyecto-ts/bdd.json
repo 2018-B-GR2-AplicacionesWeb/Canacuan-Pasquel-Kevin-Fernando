@@ -1,0 +1,16 @@
+{
+  "componentes_computador": [
+    {
+      "idComponente": 1,
+      "stock": 5,
+      "descripcion": "Teclado",
+      "precio": 200
+    },
+    {
+      "idComponente":2,
+      "stock": 10,
+      "descripcion": "Monitor 4k",
+      "precio":400
+    }
+  ]
+}
