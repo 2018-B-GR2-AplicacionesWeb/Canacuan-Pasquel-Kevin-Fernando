@@ -1,4 +1,4 @@
-import {Get, Controller, Request, Response, HttpCode, HttpException, Query, Param} from '@nestjs/common';
+import {Get, Controller, Request, Response, HttpCode, HttpException, Query, Param, Res, Post} from '@nestjs/common';
 import { AppService } from './app.service';
 import {rejects} from "assert";
 import {Observable, of} from "rxjs";
@@ -15,6 +15,20 @@ import {Observable, of} from "rxjs";
 @Controller('Usuario')
 
 export class AppController {
+    usuarios = [
+        {
+            nombre:'Kevin',
+            id:1
+        },
+        {
+            nombre:'Fernando',
+            id:2
+        },
+        {
+            nombre:'Carla',
+            id:3
+        }
+    ];
 
   @Get('saludar')
   saludar(
@@ -57,6 +71,36 @@ export class AppController {
     @Get('saludarObservable')
     saludarObservable(): Observable<string> {
         return of('Hola Mundo');
+    }
+
+    @Get('inicio')
+    inicio(
+        //devolver codigo html
+        // header 1 -> titulo importante
+        @Res() response
+    ) {
+      response.render('inicio', {
+          nombre: 'Kevin',
+          arreglo: this.usuarios
+      });
+    }
+
+    @Post('borrar/:idUsuario')
+    borrar(
+        @Param('idUsuario') idUsuario,
+        @Res() response
+    ) {
+
+      const indiceUsuario = this.usuarios.findIndex(
+          (usuario) => usuario.id === Number(idUsuario)
+      );
+
+      this.usuarios.splice(indiceUsuario,1);
+
+      response.render('inicio', {
+            nombre: 'Kevin',
+            arreglo: this.usuarios
+        });
     }
 }
 

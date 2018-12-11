@@ -11,6 +11,7 @@ import {a} from "./mi-codigo";
 async function bootstrap() {
   console.log(a);
   const app = await NestFactory.create(AppModule);
+  app.set('view engine', 'ejs');
   await app.listen(3000);
 }
 bootstrap();
