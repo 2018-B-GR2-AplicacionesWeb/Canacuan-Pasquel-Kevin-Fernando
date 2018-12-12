@@ -50,9 +50,18 @@ export class UsuarioService {
         this.usuarios.splice(indiceUsuario,1);
         return usuarioBorrado;
     }
+
+    buscarPorId(idUsuario:number) {
+        return this.usuarios.find((u) => u.id === idUsuario);
+        /*return this.usuarios.find(
+            usuario) => {
+                return usuario.id === idUsuario
+           }
+        ); */
+    }
 }
 
-interface Usuario{
+export interface Usuario{
     id:number;
     nombre:string;
     biografia:string;

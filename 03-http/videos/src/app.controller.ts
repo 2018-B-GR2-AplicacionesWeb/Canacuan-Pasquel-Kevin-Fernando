@@ -1,8 +1,21 @@
-import {Get, Controller, Request, Response, HttpCode, HttpException, Query, Param, Res, Post} from '@nestjs/common';
+import {
+    Get,
+    Controller,
+    Request,
+    Response,
+    HttpCode,
+    HttpException,
+    Query,
+    Param,
+    Res,
+    Post,
+    Body
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import {rejects} from "assert";
 import {Observable, of} from "rxjs";
 import {UsuarioService} from "./usuario.service";
+import {Usuario} from "./mi-codigo";
 
 //http:://192.168.1.2:3000/Usuario/saludar    METODO -> get, post, delete
 //http:://192.168.1.2:3000/Usuario/salir
@@ -88,6 +101,39 @@ export class AppController {
     ) {
         this._usuarioService.borrar(Number(idUsuario));
       response.redirect('/Usuario/inicio');
+    }
+
+    @Get('crear-usuario')
+    crearUsuario(
+        @Res() response
+    ) {
+        response.render(
+            'crear-usuario.ejs'
+        )
+    }
+
+    @Get('actualizar-usuario/:idUsuario')
+    actualizarUsuario(
+        @Param('idUsuario') idUsuario: string,
+        @Res() response
+    ) {
+        const usuarioAActualizar = this._usuarioService
+            .buscarPorId(Number(idUsuario));
+        response.render(
+            'crear-usuario.ejs', {
+                usuario: usuarioAActualizar
+            }
+        )
+    }
+
+    @Post('crear-usuario')
+    crearUsuarioFormulario(
+        @Body() usuario: Usuario,
+        @Res() response
+    ) {
+        // @ts-ignore
+        this._usuarioService.crear(usuario);
+        response.redirect('/Usuario/inicio')
     }
 }
 
