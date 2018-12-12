@@ -1,0 +1,31 @@
+<% var creando = typeof usuario === "undefined" ? true:false %>
+
+<h1> <%= creando ? 'Crear':'Actualizar'  %> Usuario</h1>
+<p> <%= creando ? 'Creando':'Actualizando'  %> un usuario</p>
+<form   action="/Usuario/<%= creando ? 'crear' : 'actualizar' %>-usuario/<%= creando ? '' : usuario.id %>"
+      method="POST">
+   <div>
+       <label for="nombre">Nombre</label>
+       <input id="nombre"
+              name="nombre"
+              value="<%= creando ? '':usuario.nombre  %>"
+              type="text">
+   </div>
+
+    <div>
+        <label for="biografia">Biografia</label>
+        <textarea name="biografia"
+                  id="biografia"
+                  cols="30"
+                  rows="3"><%= creando ? '':usuario.biografia %>
+
+        </textarea>
+    </div>
+
+    <button type="reset">Resetear formulario</button>
+    <button><%= creando ? 'Crear': 'Actualizar'%> Usuario</button>
+</form>
+
+<a href="/Usuario/inicio">
+    <button>Regresar</button>
+</a>
