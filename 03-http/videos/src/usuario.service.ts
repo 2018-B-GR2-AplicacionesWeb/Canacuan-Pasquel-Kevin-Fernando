@@ -33,7 +33,7 @@ export class UsuarioService {
         return nuevoUsuario;
     }
 
-    actualizar(idUsuario:number, nuevoUsuario: Usuario): Usuario {
+    actualizar(idUsuario: number, nuevoUsuario: Usuario): Usuario {
         const indiceUsuario = this.usuarios.findIndex(
             (usuario) => usuario.id === idUsuario);
         this.usuarios[indiceUsuario] = nuevoUsuario;
@@ -59,6 +59,24 @@ export class UsuarioService {
            }
         ); */
     }
+
+    buscarPorNombreOBiografia(busqueda:string): Usuario[] {
+        return this.usuarios.filter(
+            (usuario) => {
+                //busqueda contiene algo del nombre
+                const tieneAlgoEnElNombre = usuario
+                    .nombre.includes(busqueda);
+
+                //busqueda contiene algo de la biografia
+                const tieneAlgoEnLaBiografia = usuario
+                    .biografia.includes(busqueda);
+
+                return tieneAlgoEnElNombre || tieneAlgoEnLaBiografia;
+            }
+        )
+    }
+
+
 }
 
 export interface Usuario{
