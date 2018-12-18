@@ -7,7 +7,11 @@
     }
 </style>
 
+<% const existeMensaje = typeof mensaje !== "undefined" ? true:false; %>
+<%if(existeMensaje) { %>
 
+    <p>MENSAJE: <%=mensaje%></p>
+<%}%>
 <!-- codigo js -->
 <%var apellido = 'Canacuan'%>
 
@@ -18,6 +22,40 @@
 <!-- ul -> unordered list -->
 <!-- ol -> ordered list -->
 <!-- li -> list item -->
+
+<script>
+    function holaMundo(evento) {
+        console.log(evento)
+        evento.preventDefault();
+        const respuesta = confirm('¿ Estas seguro ?')
+        console.log('Hola mundo')
+    }
+
+    function borrar(evento) {
+        const respuesta = confirm('¿ Estas seguro ?')
+        if(!respuesta) {
+            event.preventDefault();
+        }
+    }
+
+
+</script>
+<a href='http://www.google.com'
+   onclick="holaMundo(event)">
+    click
+</a>
+
+
+
+<form action="/Usuario/inicio" method="get">
+    <div>
+        <label for="busqueda">Busqueda</label>
+        <input id="busqueda" type="text" name="busqueda">
+    </div>
+
+    <button type="submit">Buscar</button>
+</form>
+
 
 <a href="/Usuario/crear-usuario">
     <button>Crear Usuario</button>
@@ -54,7 +92,8 @@
                   method="post">
                 <!--button type="button">Yo no</button -->
                 <!--button>Yo si</button -->
-                <button type="submit">Eliminar</button>
+                <button type="submit"
+                    onclick="borrar(event)">Eliminar</button>
             </form>
             <a href="/Usuario/actualizar-usuario/<%=usuario.id%>">
                 <button>Actualizar</button>

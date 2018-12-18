@@ -33,49 +33,49 @@ import {Usuario} from "./mi-codigo";
 export class AppController {
 
     //CONSTRUCTOR NO ES UN CONTRUCTOR NORMAL !!
-    constructor (
+    constructor(
         private readonly _usuarioService: UsuarioService,
     ) {
 
     }
 
-  @Get('saludar')
-  saludar(
-      @Query() queryParams,
-      @Query('nombre') nombre
-  ): string {
-      return nombre
-  }
+    @Get('saludar')
+    saludar(
+        @Query() queryParams,
+        @Query('nombre') nombre
+    ): string {
+        return nombre
+    }
 
-  @Get('despedirse')
-  @HttpCode(201)
-  despedirse(): Promise<string> {
-      return new Promise<string>(
+    @Get('despedirse')
+    @HttpCode(201)
+    despedirse(): Promise<string> {
+        return new Promise<string>(
             (resolve, reject) => {
                 //resolve('Adios');
                 throw new HttpException({
-                    mensaje: 'Error en despedirse',
-                },
-                400);
+                        mensaje: 'Error en despedirse',
+                    },
+                    400);
             }
         )
-  }
+    }
 
 
-  // /Usuario/segmentoUno/12/segmentoDos
-  @Get('segmentoUno/:idUsuario/segmentoDos/')
-  ruta(
-      @Param() todosParametrosRuta,
-      @Param('idUsuario') idUsuario,
-  ): string {
-      return idUsuario;
-  }
+    // /Usuario/segmentoUno/12/segmentoDos
+    @Get('segmentoUno/:idUsuario/segmentoDos/')
+    ruta(
+        @Param() todosParametrosRuta,
+        @Param('idUsuario') idUsuario,
+    ): string {
+        return idUsuario;
+    }
 
-  @Get('tomar')
-  @HttpCode(201)
-  tomar(): string {
-      return 'Estoy borracho'
-  }
+    @Get('tomar')
+    @HttpCode(201)
+    tomar(): string {
+        return 'Estoy borracho'
+    }
 
     @Get('saludarObservable')
     saludarObservable(): Observable<string> {
@@ -86,12 +86,39 @@ export class AppController {
     inicio(
         //devolver codigo html
         // header 1 -> titulo importante
-        @Res() response
+        @Res() response,
+        //recibir los parametros de actualizar
+        @Query('accion') accion:string,
+        @Query('nombre') nombre:string,
+        @Query('busqueda') busqueda:string,
     ) {
-      response.render('inicio', {
-          nombre: 'Kevin',
-          arreglo: this._usuarioService.usuarios
-      });
+        let mensaje;
+        
+        if(accion && nombre) {
+            switch (accion) {
+                case 'actualizar':
+                    mensaje = `Registro ${nombre} actualizado`;
+                    break;
+                case 'borrar':
+                    mensaje = `Registro ${nombre} eliminado`;
+                    break;
+                case 'crear':
+                    mensaje = `Registro ${nombre} creado`;
+                    break;
+            }
+        }
+
+        let usuarios: Usuario[];
+        if(busqueda) {
+            usuarios = this._usuarioService.buscarPorNombreOBiografia(busqueda);
+        }else {
+            usuarios = this._usuarioService.usuarios
+        }
+        response.render('inicio', {
+            nombre: 'Kevin',
+            arreglo: usuarios,
+            mensaje:mensaje 
+        });
     }
 
     @Post('borrar/:idUsuario')
@@ -99,8 +126,12 @@ export class AppController {
         @Param('idUsuario') idUsuario,
         @Res() response
     ) {
-        this._usuarioService.borrar(Number(idUsuario));
-      response.redirect('/Usuario/inicio');
+        const usuario = this._usuarioService
+            .borrar(Number(idUsuario));
+        // @ts-ignore
+        const parametrosConsulta = `?accion=borrar&nombre=${usuario.nombre}`;
+
+        response.redirect('/Usuario/inicio'+parametrosConsulta);
     }
 
     @Get('crear-usuario')
@@ -133,9 +164,35 @@ export class AppController {
     ) {
         // @ts-ignore
         this._usuarioService.crear(usuario);
-        response.redirect('/Usuario/inicio')
+        // @ts-ignore
+        const parametrosConsulta = `?accion=crear&nombre=${usuario.nombre}`;
+        response.redirect('/Usuario/inicio'+parametrosConsulta)
+    }
+
+    @Post('actualizar-usuario/:idUsuario')
+    actualizarUsuarioFormulario(
+        @Param('idUsuario') idUsuario: string,
+        @Res() response,
+        @Body() usuario: Usuario
+    ) {
+        // @ts-ignore
+        usuario.id = +idUsuario;
+
+        // @ts-ignore
+        this._usuarioService.actualizar(+idUsuario, usuario);
+
+        //para enviar datos en una url se utiliza parametros de consulta
+        // @ts-ignore
+        const parametrosConsulta = `?accion=actualizar&nombre=${usuario.nombre}`;
+        response.redirect('/Usuario/inicio'+parametrosConsulta);
+
+        response.redirect('/Usuario/inicio');
+
     }
 }
+
+
+
 
 
 /*

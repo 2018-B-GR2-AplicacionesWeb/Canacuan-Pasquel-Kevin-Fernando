@@ -23,9 +23,27 @@
     </div>
 
     <button type="reset">Resetear formulario</button>
-    <button><%= creando ? 'Crear': 'Actualizar'%> Usuario</button>
+    <button onclick="validarNombre(event)"><%= creando ? 'Crear': 'Actualizar'%> Usuario</button>
 </form>
 
 <a href="/Usuario/inicio">
     <button>Regresar</button>
 </a>
+
+<script>
+    function validarNombre(evento) {
+        // 0. Obetener el valor el campo -> document.getElement
+        // 1. Revisar que el campo no este vacio
+        // 2. Revisar que el campo tenga 3 caracteres
+
+        const inputNombre = document.getElementById("nombre");
+        console.log(inputNombre);
+
+        //obtener el valor de la etiqueta
+        const nombre = inputNombre.value;
+        if(nombre.length < 3) {
+            event.preventDefault()
+            alert('Tu nombre es muy corto')
+        }
+    }
+</script>
