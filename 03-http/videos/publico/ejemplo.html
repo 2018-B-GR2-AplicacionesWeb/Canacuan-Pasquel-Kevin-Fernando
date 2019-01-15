@@ -11,62 +11,33 @@
         <meta name="author"
               content="Escuela Politecnica Nacional">
 
-        <style>
-            /*
-            CSS
-            busqueda {
-                propiedad:valor;
-            }
-            */
-
-            /* tipos de busqueda
-            etiqueta(h1) {
-                color:verde;
-            }
-            id (titulo) {
-                color:azul;
-            }
-            clase (amarillo) {
-                color:amarillo;
-                background-color:verde;
-            }
-
-            <h1 id="titulo" class="amarillo"> omg </h1>
-
-            Prioridad:
-                id > clase > etiqueta
-                las clases o propiedades se van sumando
-            */
-
-            p {
-                background-color: aliceblue;
-            }
-            #titulo {
-                background-color: yellow;
-            }
-            .rojo {
-                background-color: red;
-            }
-            .azul {
-                background-color: blue;
-            }
-            .amarillo {
-                background-color: yellow;
-            }
-
-        </style>
+        <link rel="stylesheet" href="/css/estilos.css">
     </head>
 
     <body>
 
         <h1 id="titulo">Titulo</h1>
-
         <p>Hola</p>
-        <p class="rojo">Mundo</p>
+
+        <p class="rojo">Luna</p>
+        <p class="rojo">Sol</p>
+
+        <div class="rojo">Mundo</div>
+
+        <ul>
+            <li class="rojo">Lunes <span>1</span></li>
+            <li class="rojo">Martes <span>2</span></li>
+            <li>Miercoles <span>3</span></li>
+        </ul>
+
+        <h1>TITULO</h1>
+
+        <p>DESCRIPCION</p>
+
+        <p class="animacion">DESCRIPCION DOS</p>
+
         <p class="azul amarillo rojo">CLASES</p>
 
-    <script>
-        console.log('Hola web');
-    </script>
+    <script src="/js/aplicacion.js"></script>
     </body>
 </html>
