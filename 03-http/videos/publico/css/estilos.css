@@ -1,0 +1,100 @@
+/*
+            CSS
+            busqueda {
+                propiedad:valor;
+            }
+            */
+
+/* tipos de busqueda
+etiqueta(h1) {
+    color:verde;
+}
+id (titulo) {
+    color:azul;
+}
+clase (amarillo) {
+    color:amarillo;
+    background-color:verde;
+}
+
+<h1 id="titulo" class="amarillo"> omg </h1>
+
+Prioridad:
+    id > etiqueta + clase (busquedaComplejas) > clase > etiqueta
+    las clases o propiedades se van sumando
+
+
+ Busquedas complejas
+    h1.amarillo.verde.rojo {
+    }
+
+    p.rojo {
+    }
+
+    ul > li {
+    }
+
+    ul.lista > li.item {
+        color:black;
+    }
+
+    lu.lista > li.item > span {
+        color:yellow;
+    }
+
+    h1 + p + span + li + a {
+        color:brown;
+    }
+*/
+
+p {
+    background-color: aliceblue;
+}
+#titulo {
+    background-color: yellow;
+}
+.rojo {
+    background-color: red;
+}
+.azul {
+    background-color: blue;
+}
+p.rojo.amarillo.azul {
+    background-color: greenyellow;
+}
+.amarillo {
+    background-color: yellow;
+}
+
+ul > li.rojo > span {
+    font-size: 30px;
+}
+
+h1 + p {
+    background-color: brown;
+}
+
+@keyframes crecerCambiarColor {
+    0 % {
+        background-color: red;
+        font-size: 16px;
+    }
+    25% {
+        background-color: yellow;
+        font-size: 20px;
+    }
+    50% {
+        background-color: blue;
+        font-size: 40px;
+    }
+    100% {
+        background-color: red;
+        font-size: 16px;
+    }
+}
+
+.animacion {
+    animation-name: crecerCambiarColor;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}

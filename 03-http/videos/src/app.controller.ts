@@ -9,7 +9,7 @@ import {
     Param,
     Res,
     Post,
-    Body
+    Body, Session
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import {rejects} from "assert";
@@ -188,6 +188,17 @@ export class AppController {
 
         response.redirect('/Usuario/inicio');
 
+    }
+
+
+    @Get('logout')
+    logout(
+        @Res() response,
+        @Session() sesion,
+    ) {
+        sesion.usuario = undefined;
+        sesion.destroy();
+        response.redirect('/login');
     }
 }
 
