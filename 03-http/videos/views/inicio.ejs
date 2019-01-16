@@ -1,104 +1,149 @@
-<style>
-    table, th, td {
-        border: 1px solid yellowgreen;
-    }
-    button {
-        border: 1px solid cornflowerblue;
-    }
-</style>
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
-<% const existeMensaje = typeof mensaje !== "undefined" ? true:false; %>
-<%if(existeMensaje) { %>
+    <link rel="stylesheet"
+          href="/bootstrap/css/bootstrap.css">
 
+    <link rel="stylesheet"
+          href="/css/animate.css">
+
+    <link rel="stylesheet"
+          href="/css/mis-estilos.css">
+
+</head>
+<body>
+
+<div class="container">
+    <% const existeMensaje = typeof mensaje !== "undefined" ? true:false; %>
+    <%if(existeMensaje) { %>
     <p>MENSAJE: <%=mensaje%></p>
-<%}%>
-<!-- codigo js -->
-<%var apellido = 'Canacuan'%>
+    <%}%>
+    <!-- codigo js -->
+    <%var apellido = 'Canacuan'%>
 
-<!-- = sirve para mostrar datos en pantalla-->
-<h1> <%=nombre%> <%=apellido%> </h1>
+    <!-- = sirve para mostrar datos en pantalla-->
+    <h1> Lista de Usuarios </h1>
+    <p>Crea, edita, actuaqliza y busca a usuarios. Puedes buscar usuarios por nombre o biografia</p>
 
-<!-- LISTAS -->
-<!-- ul -> unordered list -->
-<!-- ol -> ordered list -->
-<!-- li -> list item -->
+    <!-- LISTAS -->
+    <!-- ul -> unordered list -->
+    <!-- ol -> ordered list -->
+    <!-- li -> list item -->
 
-<script>
-    function holaMundo(evento) {
-        console.log(evento)
-        evento.preventDefault();
-        const respuesta = confirm('¿ Estas seguro ?')
-        console.log('Hola mundo')
-    }
-
-    function borrar(evento) {
-        const respuesta = confirm('¿ Estas seguro ?')
-        if(!respuesta) {
-            event.preventDefault();
+    <script>
+        function holaMundo(evento) {
+            console.log(evento)
+            evento.preventDefault();
+            const respuesta = confirm('¿ Estas seguro ?')
+            console.log('Hola mundo')
         }
-    }
+        function borrar(evento) {
+            const respuesta = confirm('¿ Estas seguro ?')
+            if(!respuesta) {
+                event.preventDefault();
+            }
+        }
+    </script>
+    <!--a href='http://www.google.com'
+       onclick="holaMundo(event)">
+        click
+    </a -->
 
+    <form action="/Usuario/inicio" method="get">
+        <div class="row">
+            <div class="col-sm-9">
 
-</script>
-<a href='http://www.google.com'
-   onclick="holaMundo(event)">
-    click
-</a>
+                <div class="form-group">
+                    <label for="busqueda">Busqueda</label>
+                    <input id="busqueda"
+                           type="text"
+                           class="form-control"
+                           name="busqueda">
+                </div>
 
+            </div>
+            <div class="col-sm-3">
 
+                <button type="submit" class="btn btn-outline-info btn-buscar btn-block">
+                    Buscar
+                </button>
 
-<form action="/Usuario/inicio" method="get">
-    <div>
-        <label for="busqueda">Busqueda</label>
-        <input id="busqueda" type="text" name="busqueda">
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-sm-9"></div>
+        <div class="col-sm-3">
+            <a class="quitar-decoracion" href="/Usuario/crear-usuario">
+                <button class="btn btn-outline-success btn-espaciado btn-block">
+                    Crear Usuario
+                </button>
+            </a>
+        </div>
     </div>
 
-    <button type="submit">Buscar</button>
-</form>
+    <h2>Arreglo</h2>
 
-
-<a href="/Usuario/crear-usuario">
-    <button>Crear Usuario</button>
-</a>
-
-<h2>Arreglo</h2>
-
-<!-- <ul>
+    <!-- <ul>
 <% arreglo.forEach((numero) => { %>
         <li> <%= numero %> </li>
 <% }) %>
 </ul> -->
 
-<!-- TABLAS -->
-<!-- tr -> table row -->
-<!-- th -> table header -->
-<!-- td -> table detail-->
-<table>
-    <tr>
-        <th>Nombre</th>
-        <th>Biografia</th>
-        <th>Acciones</th>
-    </tr>
-    <% arreglo.forEach((usuario) => { %>
-    <tr>
-        <td>
-            <%= usuario.nombre  %>
-        </td>
-        <td>
-            <%= usuario.biografia  %>
-        </td>
-        <td>
-            <form action="/Usuario/borrar/<%= usuario.id  %>"
-                  method="post">
-                <!--button type="button">Yo no</button -->
-                <!--button>Yo si</button -->
-                <button type="submit"
-                    onclick="borrar(event)">Eliminar</button>
-            </form>
-            <a href="/Usuario/actualizar-usuario/<%=usuario.id%>">
-                <button>Actualizar</button>
-            </a>
-        </td>
-    </tr>
-    <% })%>
-</table>
+    <!-- TABLAS -->
+    <!-- tr -> table row -->
+    <!-- th -> table header -->
+    <!-- td -> table detail-->
+    <table class="table table-hover animated fadeInUp">
+        <caption>Lista de Usuarios</caption>
+        <thead>
+            <tr>
+                <th width="30%">Nombre</th>
+                <th width="50%">Biografia</th>
+                <th width="20%">Acciones</th>
+            </tr>
+        </thead>
+      <tbody>
+      <% arreglo.forEach((usuario) => { %>
+          <tr>
+              <td>
+                  <%= usuario.nombre  %>
+              </td>
+              <td>
+                  <%= usuario.biografia  %>
+              </td>
+              <td>
+                  <form action="/Usuario/borrar/<%= usuario.id  %>"
+                        method="post">
+                      <!--button type="button">Yo no</button -->
+                      <!--button>Yo si</button -->
+                      <button type="submit"
+                              class="btn btn-outline-danger btn-block
+                                        btn-espaciado"
+                              onclick="borrar(event)">Eliminar
+                      </button>
+                  </form>
+                  <a class="quitar-decoracion"
+                          href="/Usuario/actualizar-usuario/<%=usuario.id%>">
+                      <button class="btn btn-outline-info
+                                        btn-espaciado"
+                              type="button">
+                          Actualizar
+                      </button>
+                  </a>
+              </td>
+          </tr>
+      <% })%>
+      </tbody>
+    </table>
+</div>
+
+</body>
+</html>
